@@ -1,0 +1,16 @@
+#board{
+    width:408px;
+    height:408px;
+    border:black 1px solid;
+    margin:auto;
+}
+.tile{
+    margin:auto;
+    float: left;
+    width:100px;
+    height: 100px;
+    border: grey solid 1px;
+}
+.tileValue{
+    text-align: center;
+}
