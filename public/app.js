@@ -9,11 +9,18 @@ window.onload = function() {
             this.left = document.createElement('button');
             this.right = document.createElement('button');
             this.board = [
-                [4, 2, 2, 8],
-                [2, 4, 0, 4],
-                [0, 2, 2, 2],
-                [2, 2, 0, 2]
+                [0, 2, 4, 8],
+                [16, 32, 64, 128],
+                [256, 512, 1024, 0],
+                [0, 0, 0, 0]
             ];
+        }
+        startGame(){
+            this.append();
+            this.generateRandom();
+            this.generateRandom();
+            this.value();
+            this.addListener();
         }
         append() {
             controls.appendChild(this.up);
@@ -41,7 +48,34 @@ window.onload = function() {
                 this.moveRight();
             });
         }
+        win(){
+            this.board.forEach((el)=>{
+                if(el.includes(1024)){
+                    setTimeout(function(){
+                        alert('Congratulations You Won');
+                    },300);
+                    // var newGame = document.getElementById('newGame');
+                    // var popUp = document.getElementById('popUp');
+                    // popUp.style.zIndex = '10';
+                    // newGame.addEventListener('click',() => {
+                    //     this.reset();
+                    // });
+                }
+            });
+        }
+        reset(){
+            var popUp = document.getElementById('popUp');
+            popUp.style.zIndex = '-5';
+            this.board = [
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ];
+            this.startGame();
+        }
         generateRandom() {
+            this.win();
             function randomNumber() {
                 return Math.floor(Math.random() * 4);
             }
@@ -71,6 +105,42 @@ window.onload = function() {
                     let currentTile = document.getElementById(`tileValue${i}${k}`);
                     console.log(currentTile);
                     currentTile.innerHTML = this.board[i][k];
+                    var tile = document.getElementById(`tile${i}${k}`)
+                    switch(this.board[i][k]){
+                        case 0:
+                            tile.style.backgroundColor = '#CBC0B3';
+                            break;
+                        case 2:
+                            tile.style.backgroundColor = '#EEE4DA';
+                            break;
+                        case 4:
+                            tile.style.backgroundColor = '#EDE0C9';
+                            break;
+                        case 8:
+                            tile.style.backgroundColor = '#F1B07D';
+                            break;
+                        case 16:
+                            tile.style.backgroundColor = '#F39667';
+                            break;
+                        case 32:
+                            tile.style.backgroundColor = '#F47C64';
+                            break;
+                        case 64:
+                            tile.style.backgroundColor = '#F45F43';
+                            break;
+                        case 128:
+                            tile.style.backgroundColor = '#ECCE78';
+                            break;
+                        case 256:
+                            tile.style.backgroundColor = '#ECCB69';
+                            break;
+                        case 512:
+                            tile.style.backgroundColor = '#ECCE78';
+                            break;
+                        case 1024:
+                            tile.style.backgroundColor = '#ECC44D';
+                            break;
+                    }
                 }
             }
             console.log(this.board);
@@ -80,29 +150,43 @@ window.onload = function() {
             arr[mainArrayIndex1][subArrayIndex1] = arr[mainArrayIndex2][subArrayIndex2];
             arr[mainArrayIndex2][subArrayIndex2] = tmp;
         }
+        makeableMove(oldBoard){
+            oldBoard.join('') === this.board.join('') ? alert("cant make that move"):this.generateRandom();
+        }
         moveDown() {
-            console.log("down");
-            console.log(this.board);
-
-            var moveAgain = () => {
-                for (let i = 0; i < this.board.length; i++) {
-                    for (let j = 0; j < this.board.length; j++) {
-                        if (this.board[j + 1] !== undefined && this.board[j + 1][i] === 0) {
-                            this.swap(this.board, j, i, j + 1, i);
-                        } else if (this.board[j + 1] !== undefined && this.board[j][i] === this.board[j + 1][i]) {
-                            let added = this.board[j][i] + this.board[j + 1][i];
-                            this.board[j][i] = 0;
-                            this.board[j + 1][i] = added;
-                            moveAgain();
-                        }
+            console.log("up");
+            var currentBoard = this.board.slice();
+            var move = (arr) => {
+                for (let j = arr.length - 1; j > 0; j--) {
+                    if (arr[j] === arr[j - 1]) {
+                        arr[j] = arr[j] + arr[j - 1];
+                        arr.splice(j - 1, 1);
+                    }
+                    if (arr[j] === arr[j - 1]) {
+                        move(arr);
                     }
                 }
             };
-            moveAgain();
-            this.generateRandom();
+            for (let i = 0; i < this.board.length; i++) {
+                var newArray = this.board.map((el) => el[i]).filter((el) => {
+                    if (el !== 0) {
+                        return el;
+                    }
+                });
+                move(newArray);
+                console.log("new Array", newArray);
+                while (newArray.length < 4) {
+                    newArray.unshift(0);
+                }
+                for (var k = 0; k < this.board.length; k++) {
+                    this.board[k][i] = newArray[k];
+                }
+            }
+            this.makeableMove(currentBoard);
         }
         moveUp() {
             console.log("up");
+            var currentBoard = this.board.slice();
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
                     if (arr[j] === arr[j - 1]) {
@@ -129,10 +213,11 @@ window.onload = function() {
                     this.board[k][i] = newArray[k];
                 }
             }
-            this.generateRandom();
+            this.makeableMove(currentBoard);
         }
         moveLeft() {
             console.log("left");
+            var currentBoard = this.board.slice();
             var move = (arr) => {
                 for (let j = 0; j < arr.length; j++) {
                     if (arr[j] === arr[j + 1]) {
@@ -156,10 +241,11 @@ window.onload = function() {
                 }
                 this.board[i] = newArray;
             }
-            this.generateRandom();
+            this.makeableMove(currentBoard);
         }
         moveRight() {
             console.log("right");
+            var currentBoard = this.board.slice();
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
                     if (arr[j] === arr[j - 1]) {
@@ -184,14 +270,9 @@ window.onload = function() {
                 }
                 this.board[i] = newArray;
             }
-            this.generateRandom();
+            this.makeableMove(currentBoard);
         }
     }
-    var startGame = new Controls();
-    startGame.append();
-    // startGame.generateRandom();
-    // startGame.generateRandom();
-    startGame.updateBoard()
-    startGame.value();
-    startGame.addListener();
+    var Game = new Controls();
+    Game.startGame();
 };
