@@ -104,28 +104,30 @@ window.onload = function() {
         moveUp() {
             console.log("up");
             var move = (arr) => {
-                for (let j = 0; j < arr.length; j++) {
-                    if (arr[j] === arr[j + 1]) {
-                        arr[j] = arr[j] + arr[j + 1];
-                        arr.splice(j + 1, 1);
+                for (let j = arr.length - 1; j > 0; j--) {
+                    if (arr[j] === arr[j - 1]) {
+                        arr[j] = arr[j] + arr[j - 1];
+                        arr.splice(j - 1, 1);
                     }
-                    if (arr[0] === arr[1]) {
+                    if (arr[j] === arr[j - 1]) {
                         move(arr);
                     }
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
-                var newArray = this.board.map((el)=> el[i]).filter((el) => {
+                var newArray = this.board.map((el) => el[i]).filter((el) => {
                     if (el !== 0) {
                         return el;
                     }
                 });
                 move(newArray);
                 console.log("new Array", newArray);
-                // while (newArray.length < 4) {
-                //     newArray.push(0);
-                // }
-                // this.board[i] = newArray;
+                while (newArray.length < 4) {
+                    newArray.push(0);
+                }
+                for (var k = 0; k < this.board.length; k++) {
+                    this.board[k][i] = newArray[k];
+                }
             }
             this.generateRandom();
         }
