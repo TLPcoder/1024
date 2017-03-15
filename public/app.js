@@ -1,7 +1,6 @@
 "use strict";
 window.onload = function() {
     var board = document.getElementById('board');
-    var tile1 = document.getElementById('tileValue0');
     var controls = document.getElementById('controls');
     class Controls {
         constructor() {
@@ -10,10 +9,10 @@ window.onload = function() {
             this.left = document.createElement('button');
             this.right = document.createElement('button');
             this.board = [
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]
+                [4, 2, 2, 8],
+                [2, 4, 0, 4],
+                [0, 2, 2, 2],
+                [2, 2, 0, 2]
             ];
         }
         append() {
@@ -104,66 +103,93 @@ window.onload = function() {
         }
         moveUp() {
             console.log("up");
-            var moveAgain = () => {
-                for (let i = this.board.length-1; i >= 0; i--) {
-                    for (let j = this.board.length-1; j >= 0 ; j--) {
-                        if (this.board[j - 1] !== undefined && this.board[j - 1][i] === 0) {
-                            this.swap(this.board, j, i, j - 1, i);
-                        } else if (this.board[j - 1] !== undefined && this.board[j][i] === this.board[j - 1][i]) {
-                            let added = this.board[j][i] + this.board[j - 1][i];
-                            this.board[j][i] = 0;
-                            this.board[j - 1][i] = added;
-                            moveAgain();
-                        }
+            var move = (arr) => {
+                for (let j = 0; j < arr.length; j++) {
+                    if (arr[j] === arr[j + 1]) {
+                        arr[j] = arr[j] + arr[j + 1];
+                        arr.splice(j + 1, 1);
+                    }
+                    if (arr[0] === arr[1]) {
+                        move(arr);
                     }
                 }
             };
-            moveAgain();
+            for (let i = 0; i < this.board.length; i++) {
+                var newArray = this.board.map((el)=> el[i]).filter((el) => {
+                    if (el !== 0) {
+                        return el;
+                    }
+                });
+                move(newArray);
+                console.log("new Array", newArray);
+                // while (newArray.length < 4) {
+                //     newArray.push(0);
+                // }
+                // this.board[i] = newArray;
+            }
             this.generateRandom();
         }
         moveLeft() {
             console.log("left");
-            var moveAgain = () => {
-                for (let i = this.board.length - 1; i >= 0; i--) {
-                    for (let j = this.board[i].length - 1; j >= 0; j--) {
-                        if (this.board[i][j - 1] === 0) {
-                            this.swap(this.board, i, j, i, j - 1);
-                        } else if (this.board[i][j] === this.board[i][j - 1]) {
-                            let added = this.board[i][j] + this.board[i][j - 1];
-                            this.board[i][j] = 0;
-                            this.board[i][j - 1] = added;
-                            moveAgain();
-                        }
+            var move = (arr) => {
+                for (let j = 0; j < arr.length; j++) {
+                    if (arr[j] === arr[j + 1]) {
+                        arr[j] = arr[j] + arr[j + 1];
+                        arr.splice(j + 1, 1);
+                    }
+                    if (arr[0] === arr[1]) {
+                        move(arr);
                     }
                 }
             };
-            moveAgain();
+            for (let i = 0; i < this.board.length; i++) {
+                var newArray = this.board[i].filter((el) => {
+                    if (el !== 0) {
+                        return el;
+                    }
+                });
+                move(newArray);
+                while (newArray.length < 4) {
+                    newArray.push(0);
+                }
+                this.board[i] = newArray;
+            }
             this.generateRandom();
         }
         moveRight() {
             console.log("right");
-            var moveAgain = () => {
-                for (let i = 0; i < this.board.length; i++) {
-                    for (let j = 0; j < this.board[i].length; j++) {
-                        if (this.board[i][j + 1] === 0) {
-                            this.swap(this.board, i, j, i, j + 1);
-                        } else if (this.board[i][j] === this.board[i][j + 1]) {
-                            let added = this.board[i][j] + this.board[i][j + 1];
-                            this.board[i][j] = 0;
-                            this.board[i][j + 1] = added;
-                            moveAgain();
-                        }
+            var move = (arr) => {
+                for (let j = arr.length - 1; j > 0; j--) {
+                    if (arr[j] === arr[j - 1]) {
+                        arr[j] = arr[j] + arr[j - 1];
+                        arr.splice(j - 1, 1);
+                    }
+                    if (arr[j] === arr[j - 1]) {
+                        move(arr);
                     }
                 }
             };
-            moveAgain();
+            for (let i = 0; i < this.board.length; i++) {
+                var newArray = this.board[i].filter((el) => {
+                    if (el !== 0) {
+                        return el;
+                    }
+                });
+                console.log("before", newArray);
+                move(newArray);
+                while (newArray.length < 4) {
+                    newArray.unshift(0);
+                }
+                this.board[i] = newArray;
+            }
             this.generateRandom();
         }
     }
     var startGame = new Controls();
     startGame.append();
-    startGame.generateRandom();
-    startGame.generateRandom();
+    // startGame.generateRandom();
+    // startGame.generateRandom();
+    startGame.updateBoard()
     startGame.value();
     startGame.addListener();
 };
