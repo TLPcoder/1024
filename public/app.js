@@ -9,10 +9,10 @@ window.onload = function() {
             this.left = document.createElement('button');
             this.right = document.createElement('button');
             this.board = [
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]
+                [2, 4, 8, 0],
+                [8, 16, 64, 32],
+                [4, 8, 0, 8],
+                [2, 2, 8, 4]
             ];
         }
         startGame(){
@@ -112,7 +112,6 @@ window.onload = function() {
             while (true) {
                 let position1 = randomNumber();
                 let position2 = randomNumber();
-                console.log(this.board[position1][position2]);
                 if (this.board[position1][position2] === 0) {
                     this.board[position1].splice(position2, 1, randomNum2To4());
                     break;
@@ -124,7 +123,6 @@ window.onload = function() {
             for (var i = 0; i < this.board.length; i++) {
                 for (var k = 0; k < this.board[i].length; k++) {
                     let currentTile = document.getElementById(`tileValue${i}${k}`);
-                    console.log(currentTile);
                     currentTile.innerHTML = this.board[i][k];
                     var tile = document.getElementById(`tile${i}${k}`)
                     switch(this.board[i][k]){
@@ -164,7 +162,6 @@ window.onload = function() {
                     }
                 }
             }
-            console.log(this.board);
         }
         swap(arr, mainArrayIndex1, subArrayIndex1, mainArrayIndex2, subArrayIndex2) {
             var tmp = arr[mainArrayIndex1][subArrayIndex1];
@@ -172,10 +169,13 @@ window.onload = function() {
             arr[mainArrayIndex2][subArrayIndex2] = tmp;
         }
         makeableMove(oldBoard){
+            if(!this.checkLost()){
+                alert("No more moves. You Lost!");
+                return
+            }
             oldBoard.join('') === this.board.join('') ? alert("cant make that move"):this.generateRandom();
         }
         moveDown() {
-            console.log("up");
             var currentBoard = [];
             for(let i = 0; i < this.board.length; i++){
                 currentBoard.push([]);
@@ -201,7 +201,6 @@ window.onload = function() {
                     }
                 });
                 move(newArray);
-                console.log("new Array", newArray);
                 while (newArray.length < 4) {
                     newArray.unshift(0);
                 }
@@ -210,9 +209,9 @@ window.onload = function() {
                 }
             }
             this.makeableMove(currentBoard);
+            return currentBoard === this.board;
         }
         moveUp() {
-            console.log("up");
             var currentBoard = [];
             for(let i = 0; i < this.board.length; i++){
                 currentBoard.push([]);
@@ -238,7 +237,6 @@ window.onload = function() {
                     }
                 });
                 move(newArray);
-                console.log("new Array", newArray);
                 while (newArray.length < 4) {
                     newArray.push(0);
                 }
@@ -247,9 +245,9 @@ window.onload = function() {
                 }
             }
             this.makeableMove(currentBoard);
+            return currentBoard === this.board;
         }
         moveLeft() {
-            console.log("left");
             var currentBoard = this.board.slice();
             var move = (arr) => {
                 for (let j = 0; j < arr.length; j++) {
@@ -275,9 +273,9 @@ window.onload = function() {
                 this.board[i] = newArray;
             }
             this.makeableMove(currentBoard);
+            return currentBoard === this.board;
         }
         moveRight() {
-            console.log("right");
             var currentBoard = this.board.slice();
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
@@ -296,7 +294,6 @@ window.onload = function() {
                         return el;
                     }
                 });
-                console.log("before", newArray);
                 move(newArray);
                 while (newArray.length < 4) {
                     newArray.unshift(0);
@@ -304,6 +301,24 @@ window.onload = function() {
                 this.board[i] = newArray;
             }
             this.makeableMove(currentBoard);
+            return currentBoard === this.board;
+        }
+        checkLost(){
+            for(let i = 0; i < this.board.length; i++){
+                for(let k = 0; k < this.board[i].length - 1; k++){
+                    if(this.board[i][k] === this.board[i][k+1] || this.board[i][k] === 0){
+                        return true;
+                    }
+                }
+            }
+            for(let i = 0; i < this.board.length; i++){
+                for(let k = 0; k < this.board[i].length - 1; k++){
+                    if(this.board[k][i] === this.board[k+1][i] || this.board[k][i] === 0){
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
     var Game = new Controls();
