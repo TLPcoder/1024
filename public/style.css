@@ -1,16 +1,122 @@
-#board{
-    width:408px;
-    height:408px;
-    border:black 1px solid;
-    margin:auto;
+body {
+    z-index: 5;
+    background-color: #FAFAFA;
 }
-.tile{
-    margin:auto;
-    float: left;
-    width:100px;
-    height: 100px;
-    border: grey solid 1px;
+
+@media only screen and (min-device-width: 500px) {
+    .board {
+        width: 416px;
+        height: 416px;
+        border: #C1B19C 2px solid;
+        margin: auto;
+        z-index: 10;
+        margin-top: 80px;
+    }
 }
-.tileValue{
+
+@media only screen and (max-device-width: 500px) {
+    .board {
+        width: 912px;
+        height: 912px;
+        border: #C1B19C 4px solid;
+        margin: auto;
+        z-index: 10;
+        margin-top: 150px;
+    }
+}
+
+@media only screen and (min-device-width: 500px) {
+    .tile{
+        margin:auto;
+        float: left;
+        width:100px;
+        height: 100px;
+        border: #C1B19C solid 2px;
+        z-index: 10;
+    }
+}
+
+@media only screen and (max-device-width: 500px) {
+    .tile {
+        margin: auto;
+        float: left;
+        width: 220px;
+        height: 220px;
+        border: #C1B19C solid 4px;
+        z-index: 10;
+    }
+}
+
+.tileValue {
     text-align: center;
+}
+
+#popUp {
+    margin: auto;
+    width: 408px;
+    height: 200px;
+    border: black 1px solid;
+    z-index: -5;
+}
+
+#controls {
+    margin: auto;
+    display: table;
+}
+
+.button{
+    background-color: #F47C64;
+    border: solid 1px #F47C64;
+    color: white;
+    /*padding: 8px 16px;*/
+    text-decoration: none;
+    margin-top: 10px;
+    margin-left: 10px;
+    -webkit-transition-duration: .5s; /* Safari */
+    transition-duration: .5s;
+}
+.button:hover{
+    background-color: white;
+    color: #F47C64;
+    border: solid 1px #F47C64;
+}
+
+@media only screen and (min-device-width: 500px) {
+    .button{
+        padding: 15px 27px;
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-device-width: 500px) {
+    .button {
+        margin-top: 50px;
+        padding: 32px 64px;
+        font-size: 35px;
+    }
+}
+@media only screen and (min-device-width: 500px) {
+    .tileValue{
+        margin-top: 30px;
+    }
+}
+
+@media only screen and (max-device-width: 500px) {
+    .tileValue {
+        margin-top: 75px;
+        font-size: 70px;
+    }
+}
+
+
+@media only screen and (max-device-width: 500px) {
+    #creator {
+        font-size: 30px;
+    }
+}
+
+#creator{
+    text-align: center;
+    color: #F47C64;
+    margin: auto;
 }

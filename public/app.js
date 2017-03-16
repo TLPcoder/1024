@@ -9,10 +9,10 @@ window.onload = function() {
             this.left = document.createElement('button');
             this.right = document.createElement('button');
             this.board = [
-                [2, 4, 8, 0],
-                [8, 16, 64, 32],
-                [4, 8, 0, 8],
-                [2, 2, 8, 4]
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
             ];
         }
         startGame(){
@@ -23,6 +23,10 @@ window.onload = function() {
             this.addListener();
         }
         append() {
+            this.up.className = "button";
+            this.down.className = "button";
+            this.left.className = "button";
+            this.right.className = "button";
             controls.appendChild(this.up);
             controls.appendChild(this.down);
             controls.appendChild(this.left);
@@ -125,39 +129,52 @@ window.onload = function() {
                     let currentTile = document.getElementById(`tileValue${i}${k}`);
                     currentTile.innerHTML = this.board[i][k];
                     var tile = document.getElementById(`tile${i}${k}`)
+                    var value = document.getElementById(`tileValue${i}${k}`);
+                    console.log(this.board[i][k]);
                     switch(this.board[i][k]){
                         case 0:
-                            tile.style.backgroundColor = '#CBC0B3';
+                            tile.style.backgroundColor = '#F9F6F2';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 2:
                             tile.style.backgroundColor = '#EEE4DA';
+                            value.style.color = "#776E66";
                             break;
                         case 4:
-                            tile.style.backgroundColor = '#EDE0C9';
+                            tile.style.backgroundColor = '#CBC0B3';
+                            value.style.color = "#776E66";
                             break;
                         case 8:
                             tile.style.backgroundColor = '#F1B07D';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 16:
                             tile.style.backgroundColor = '#F39667';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 32:
                             tile.style.backgroundColor = '#F47C64';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 64:
                             tile.style.backgroundColor = '#F45F43';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 128:
                             tile.style.backgroundColor = '#ECCE78';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 256:
                             tile.style.backgroundColor = '#ECCB69';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 512:
                             tile.style.backgroundColor = '#ECCE78';
+                            value.style.color = "#F9F6F2";
                             break;
                         case 1024:
                             tile.style.backgroundColor = '#ECC44D';
+                            value.style.color = "#F9F6F2";
                             break;
                     }
                 }
