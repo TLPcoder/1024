@@ -9,9 +9,9 @@ window.onload = function() {
             this.left = document.createElement('button');
             this.right = document.createElement('button');
             this.board = [
-                [0, 2, 4, 8],
-                [16, 32, 64, 128],
-                [256, 512, 1024, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
                 [0, 0, 0, 0]
             ];
         }
@@ -47,6 +47,27 @@ window.onload = function() {
             this.right.addEventListener('click', () => {
                 this.moveRight();
             });
+            document.onkeydown = (e) => {
+                e = e || window.event;
+                switch (e.which || e.keyCode) {
+                    case 37: // left
+                        this.moveLeft();
+                        break;
+
+                    case 38: // up
+                        this.moveUp();
+                        break;
+
+                    case 39: // right
+                        this.moveRight();
+                        break;
+
+                    case 40: // down
+                        this.moveDown();
+                        break;
+
+                }
+            };
         }
         win(){
             this.board.forEach((el)=>{
@@ -155,7 +176,13 @@ window.onload = function() {
         }
         moveDown() {
             console.log("up");
-            var currentBoard = this.board.slice();
+            var currentBoard = [];
+            for(let i = 0; i < this.board.length; i++){
+                currentBoard.push([]);
+                for(let j = 0; j < this.board[i].length; j++){
+                    currentBoard[i].push(this.board[i][j]);
+                }
+            }
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
                     if (arr[j] === arr[j - 1]) {
@@ -186,7 +213,13 @@ window.onload = function() {
         }
         moveUp() {
             console.log("up");
-            var currentBoard = this.board.slice();
+            var currentBoard = [];
+            for(let i = 0; i < this.board.length; i++){
+                currentBoard.push([]);
+                for(let j = 0; j < this.board[i].length; j++){
+                    currentBoard[i].push(this.board[i][j]);
+                }
+            }
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
                     if (arr[j] === arr[j - 1]) {
