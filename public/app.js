@@ -9,10 +9,10 @@ window.onload = function() {
             this.left = document.createElement('button');
             this.right = document.createElement('button');
             this.board = [
-                [0, 0, 0, 16],
-                [0, 0, 0, 16],
-                [0, 0, 0, 16],
-                [4, 4, 8, 16]
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
             ];
         }
         startGame(){
