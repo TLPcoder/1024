@@ -9,10 +9,10 @@ window.onload = function() {
             this.left = document.createElement('button');
             this.right = document.createElement('button');
             this.board = [
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]
+                [0, 0, 0, 16],
+                [0, 0, 0, 16],
+                [0, 0, 0, 16],
+                [4, 4, 8, 16]
             ];
         }
         startGame(){
@@ -206,9 +206,10 @@ window.onload = function() {
                         arr[j] = arr[j] + arr[j - 1];
                         arr.splice(j - 1, 1);
                     }
-                    if (arr[j] === arr[j - 1]) {
-                        move(arr);
-                    }
+                    // if (arr[j] === arr[j - 1]) {
+                    //     move(arr);
+                    // }
+                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
@@ -242,9 +243,10 @@ window.onload = function() {
                         arr[j] = arr[j] + arr[j - 1];
                         arr.splice(j - 1, 1);
                     }
-                    if (arr[j] === arr[j - 1]) {
-                        move(arr);
-                    }
+                    // if (arr[j] === arr[j - 1]) {
+                    //     move(arr);
+                    // }
+                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
@@ -272,9 +274,10 @@ window.onload = function() {
                         arr[j] = arr[j] + arr[j + 1];
                         arr.splice(j + 1, 1);
                     }
-                    if (arr[0] === arr[1]) {
-                        move(arr);
-                    }
+                    // if (arr[0] === arr[1]) {
+                    //     move(arr);
+                    // }
+                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
@@ -300,9 +303,10 @@ window.onload = function() {
                         arr[j] = arr[j] + arr[j - 1];
                         arr.splice(j - 1, 1);
                     }
-                    if (arr[j] === arr[j - 1]) {
-                        move(arr);
-                    }
+                    // if (arr[j] === arr[j - 1]) {
+                    //     move(arr);
+                    // }
+                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
