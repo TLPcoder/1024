@@ -79,18 +79,10 @@ window.onload = function() {
                     setTimeout(function(){
                         alert('Congratulations You Won');
                     },300);
-                    // var newGame = document.getElementById('newGame');
-                    // var popUp = document.getElementById('popUp');
-                    // popUp.style.zIndex = '10';
-                    // newGame.addEventListener('click',() => {
-                    //     this.reset();
-                    // });
                 }
             });
         }
         reset(){
-            var popUp = document.getElementById('popUp');
-            popUp.style.zIndex = '-5';
             this.board = [
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
@@ -188,35 +180,23 @@ window.onload = function() {
         makeableMove(oldBoard){
             if(!this.checkLost()){
                 alert("No more moves. You Lost!");
-                return
+            }else{
+                oldBoard === this.board.join('') ? console.log('cant make that move'):this.generateRandom();
             }
-            oldBoard.join('') === this.board.join('') ? alert("cant make that move"):this.generateRandom();
         }
         moveDown() {
-            var currentBoard = [];
-            for(let i = 0; i < this.board.length; i++){
-                currentBoard.push([]);
-                for(let j = 0; j < this.board[i].length; j++){
-                    currentBoard[i].push(this.board[i][j]);
-                }
-            }
+            var currentBoard = this.board.join('');
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
                     if (arr[j] === arr[j - 1]) {
                         arr[j] = arr[j] + arr[j - 1];
                         arr.splice(j - 1, 1);
                     }
-                    // if (arr[j] === arr[j - 1]) {
-                    //     move(arr);
-                    // }
-                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
                 var newArray = this.board.map((el) => el[i]).filter((el) => {
-                    if (el !== 0) {
-                        return el;
-                    }
+                        return el > 0;
                 });
                 move(newArray);
                 while (newArray.length < 4) {
@@ -227,33 +207,20 @@ window.onload = function() {
                 }
             }
             this.makeableMove(currentBoard);
-            return currentBoard === this.board;
         }
         moveUp() {
-            var currentBoard = [];
-            for(let i = 0; i < this.board.length; i++){
-                currentBoard.push([]);
-                for(let j = 0; j < this.board[i].length; j++){
-                    currentBoard[i].push(this.board[i][j]);
-                }
-            }
+            var currentBoard = this.board.join('');
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
                     if (arr[j] === arr[j - 1]) {
                         arr[j] = arr[j] + arr[j - 1];
                         arr.splice(j - 1, 1);
                     }
-                    // if (arr[j] === arr[j - 1]) {
-                    //     move(arr);
-                    // }
-                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
                 var newArray = this.board.map((el) => el[i]).filter((el) => {
-                    if (el !== 0) {
-                        return el;
-                    }
+                        return el > 0;
                 });
                 move(newArray);
                 while (newArray.length < 4) {
@@ -264,27 +231,20 @@ window.onload = function() {
                 }
             }
             this.makeableMove(currentBoard);
-            return currentBoard === this.board;
         }
         moveLeft() {
-            var currentBoard = this.board.slice();
+            var currentBoard = this.board.join('');
             var move = (arr) => {
                 for (let j = 0; j < arr.length; j++) {
                     if (arr[j] === arr[j + 1]) {
                         arr[j] = arr[j] + arr[j + 1];
                         arr.splice(j + 1, 1);
                     }
-                    // if (arr[0] === arr[1]) {
-                    //     move(arr);
-                    // }
-                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
                 var newArray = this.board[i].filter((el) => {
-                    if (el !== 0) {
-                        return el;
-                    }
+                        return el > 0;
                 });
                 move(newArray);
                 while (newArray.length < 4) {
@@ -293,27 +253,20 @@ window.onload = function() {
                 this.board[i] = newArray;
             }
             this.makeableMove(currentBoard);
-            return currentBoard === this.board;
         }
         moveRight() {
-            var currentBoard = this.board.slice();
+            var currentBoard = this.board.join('');
             var move = (arr) => {
                 for (let j = arr.length - 1; j > 0; j--) {
                     if (arr[j] === arr[j - 1]) {
                         arr[j] = arr[j] + arr[j - 1];
                         arr.splice(j - 1, 1);
                     }
-                    // if (arr[j] === arr[j - 1]) {
-                    //     move(arr);
-                    // }
-                    // reccursion until all number in row are add that can be added
                 }
             };
             for (let i = 0; i < this.board.length; i++) {
                 var newArray = this.board[i].filter((el) => {
-                    if (el !== 0) {
-                        return el;
-                    }
+                        return el > 0;
                 });
                 move(newArray);
                 while (newArray.length < 4) {
@@ -322,7 +275,6 @@ window.onload = function() {
                 this.board[i] = newArray;
             }
             this.makeableMove(currentBoard);
-            return currentBoard === this.board;
         }
         checkLost(){
             for(let i = 0; i < this.board.length; i++){
