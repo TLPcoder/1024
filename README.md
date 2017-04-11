@@ -99,3 +99,5 @@ makeAbleMove(arr) makes all the functions calls to set the board up for the foll
         }
     }
 ```
+
+Hope you enjoy the game 1024 I know I do : )
