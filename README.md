@@ -24,7 +24,7 @@ To start off the game a startgame() function is called which sets prepares the b
         this.generateRandom();
         this.generateRandom();
         this.value();
-        this.addListener(); // adds event listeners to arrow keys and but
+        this.addListener(); // adds event listeners to arrow keys and buttons for mobile
     }
 ```
 
